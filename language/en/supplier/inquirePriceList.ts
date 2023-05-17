@@ -1,1 +1,0 @@
-export default {"supplier.inquirePriceList.menuTitle":"Quotation List"}

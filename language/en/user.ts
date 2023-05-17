@@ -1,1 +1,0 @@
-export default {"user.login.title":"Budweiser Supplier Management System 2.0"}
