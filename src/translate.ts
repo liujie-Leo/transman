@@ -3,6 +3,8 @@ import { config } from "./index.js";
 import { LimitPromise, generateSign, appid, salt } from "./utils.js";
 import axios from "axios";
 import path from "path";
+import ora from "ora";
+import chalk from "chalk";
 
 interface IFlattenItem {
   key: string;
@@ -34,6 +36,12 @@ export const flatten = (item: FilesTreeItem, flattenData: IFlattenItem[]) => {
 };
 
 export const transApi = (data: IFlattenItem[]) => {
+  const spinner = ora({
+    text: "translating...",
+    color: "green",
+    spinner: "simpleDotsScrolling",
+  });
+  spinner.start();
   return new Promise((resolve, reject) => {
     const limitPromise = new LimitPromise(2);
     const promises = [];
@@ -63,6 +71,7 @@ export const transApi = (data: IFlattenItem[]) => {
           returnMap[keyRes.key] = item.trans_result[0].dst;
         }
       }
+      spinner.stop();
       resolve(returnMap);
     });
   });
@@ -123,4 +132,6 @@ export const translate = async (
 
   // 根据data生成翻译后的文件 / generate file by data.
   generateFile(data, config);
+
+  console.log(chalk.white.bgGreen(" DONE ") + ` translation finished.`);
 };
