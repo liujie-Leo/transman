@@ -1,0 +1,1 @@
+export default {"quotationManage.menuTitle":"Inquiry and quotation management"}

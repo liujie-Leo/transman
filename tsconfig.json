@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "esModuleInterop": true,
+    "target": "es2017",
+    "allowJs": false,
+    "strict": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "types":["node"],
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    }
+  },
+  "exclude": ["./src/test/translateFrom.ts", "./src/test/dist"]
+}
