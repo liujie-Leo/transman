@@ -1,6 +1,6 @@
 {
   "name": "transman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "",
   "main": "index.js",
@@ -8,9 +8,9 @@
   "scripts": {
     "test": "node ./test.js",
     "build": "tsc",
+    "bin": "node ./bin/index.js",
     "dev": "npm run build && npm run test"
   },
-  "module": "./dist/index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,10 +25,14 @@
     "js-md5": "^0.7.3",
     "ora": "^6.3.1"
   },
+  "files": [
+    "dist",
+    "bin",
+    "package.json"
+  ],
   "devDependencies": {
     "@types/node": "^18.15.3",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",

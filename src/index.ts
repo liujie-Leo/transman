@@ -9,6 +9,7 @@ export interface config {
   languageFrom: string;
   languageTo: string;
   data: FilesTreeItem;
+  customTranslation: any;
 }
 
 // 校验config
@@ -55,10 +56,14 @@ const validateConfig = (config: config) => {
     );
     return false;
   }
+
+  // 初始化customTranslation
+  config.customTranslation = config.customTranslation ?? {};
+
   return config;
 };
 
-// 从vite.config.js中获取配置
+// 从vite.config.js中获取配置 d
 const getConfigFromVite = async () => {
   const viteConfigPath = findup("vite.config.js") || "";
   if (viteConfigPath) {

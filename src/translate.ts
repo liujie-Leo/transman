@@ -20,17 +20,23 @@ interface IApiResData {
   trans_result: Array<IApiResDataItem>;
 }
 
-export const flatten = (item: FilesTreeItem, flattenData: IFlattenItem[]) => {
+export const flatten = (
+  item: FilesTreeItem,
+  flattenData: IFlattenItem[],
+  config: config
+) => {
   if (item.children.length > 0) {
     for (const subItem of item.children) {
-      flatten(subItem, flattenData);
+      flatten(subItem, flattenData, config);
     }
   } else {
     for (const key in item.data) {
-      flattenData.push({
-        key,
-        value: item.data[key],
-      });
+      if (!config.customTranslation[key]) {
+        flattenData.push({
+          key,
+          value: item.data[key],
+        });
+      }
     }
   }
 };
@@ -77,15 +83,20 @@ export const transApi = (data: IFlattenItem[]) => {
   });
 };
 
-export const mergeTranslate = (data: FilesTreeItem, translatedData: any) => {
+export const mergeTranslate = (
+  data: FilesTreeItem,
+  translatedData: any,
+  config: config
+) => {
   if (data.children?.length > 0) {
     for (const item of data.children) {
-      mergeTranslate(item, translatedData);
+      mergeTranslate(item, translatedData, config);
     }
   } else {
     data.translatedData = {};
     for (const key of Object.keys(data.data)) {
-      data.translatedData[key] = translatedData[key];
+      data.translatedData[key] =
+        config.customTranslation[key] ?? translatedData[key];
     }
   }
 };
@@ -122,13 +133,13 @@ export const translate = async (
 ): Promise<void> => {
   // 扁平化数据 / flatten data for translate.
   const flattenData: IFlattenItem[] = [];
-  flatten(data, flattenData);
+  flatten(data, flattenData, config);
 
   // 扁平化后的数据调用翻译api翻译 / after flattening data call api to translation.
   const translatedData: any = await transApi(flattenData);
 
   // 数据全部翻译完成后，将数据整合至data中 / translated data merge origin data after translation finished.
-  mergeTranslate(data, translatedData);
+  mergeTranslate(data, translatedData, config);
 
   // 根据data生成翻译后的文件 / generate file by data.
   generateFile(data, config);

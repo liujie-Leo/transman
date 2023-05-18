@@ -3,16 +3,17 @@ import { program } from 'commander'
 import figlet from 'figlet'
 import createTranslate from '../dist/index.js'
 import chalk from 'chalk'
+import packageJson from '../package.json' assert {type: 'json'}
 
 // create命令
 program
-  .version('0.1.0')
-  .command('start')
-  .description('start to translate')
-  .option('-f, --force', 'overwrite target directory if it exist')
+  .version(packageJson.version)
+  .command("start")
+  .description("start to translate")
+  .option("-f, --force", "overwrite target directory if it exist")
   .action((name, options) => {
-    createTranslate(name, options)
-  })
+    createTranslate(name, options);
+  });
 
 // --help命令
 program
