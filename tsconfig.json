@@ -8,12 +8,10 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "baseUrl": "./src",
-    "types":["node"],
+    "types": ["node"],
     "paths": {
-      "*": [
-        "node_modules/*"
-      ]
+      "*": ["node_modules/*"]
     }
   },
-  "exclude": ["./src/test/translateFrom.ts", "./src/test/dist"]
+  "exclude": ["./src/test/translateFrom.ts", "./src/test/dist", "bin"]
 }

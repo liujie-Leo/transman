@@ -1,4 +1,4 @@
-import { getFilesTree, FilesTreeItem } from "./file.js";
+import { getFilesTree, FilesTreeItem, hasFile } from "./file.js";
 import { translate } from "./translate.js";
 import findup from "findup-sync";
 import chalk from "chalk";
@@ -19,6 +19,12 @@ const validateConfig = (config: config) => {
         chalk.white(
           " The [ source ] configuration is not obtained. Please check in vite.config.js for translation."
         )
+    );
+    return false;
+  } else if (!hasFile(config.source)) {
+    console.log(
+      chalk.white.bgRed(" Error: ") +
+        chalk.white(" The file corresponding to the source path is not found.")
     );
     return false;
   }
@@ -95,4 +101,5 @@ const createTranslate = async () => {
     translate(getFilesTree(config.source, true), config);
   }
 };
+
 export default createTranslate;
