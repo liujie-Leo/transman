@@ -4,10 +4,6 @@ export const secret: string = "2WTtIhe6BGnl97HD_tPM";
 export const appid: string = "20230315001601253";
 export const salt: string = "213jliajfiljsdfl";
 
-/**
- * @function 控制promise并发数
- * @description 控制promise并发数
- */
 export class LimitPromise {
   max: number = 5;
   taskQueue: Array<Function> = [];
@@ -52,12 +48,6 @@ export class LimitPromise {
   }
 }
 
-/**
- * @description 数组去重
- * @param data { array } 被去重的数据
- * @param options { object } 配置入参
- * @param options.key { string | number } 去重的key，如果有key，则会根据数组对象中的key进行去重，否则只进行简单去重
- */
 interface InoRepeatOptions {
   key: string;
 }
@@ -79,7 +69,6 @@ export const noRepeat = (data: Array<any>, options?: InoRepeatOptions) => {
   }
 };
 
-// 判断非空
 export const isNotEmpty = (str: any) => {
   return ![null, undefined, ""].includes(str);
 };

@@ -104,10 +104,10 @@ export const mergeTranslate = (
 export const generateFile = (data: FilesTreeItem, config: config) => {
   const itemPath = path.join(config.outDir, ...data.path);
 
-  // 目录 / dir
+  // dir
   if (data.isDirectory) {
     if (hasFile(itemPath)) {
-      // 先移除 / first remove
+      // first remove
       remove(itemPath);
     }
     create(itemPath);
@@ -117,31 +117,26 @@ export const generateFile = (data: FilesTreeItem, config: config) => {
       }
     }
   } else {
-    // 文件 / file
+    // file
     create(itemPath, `export default ${JSON.stringify(data.translatedData)}`);
   }
 };
 
-/**
- * @function translate
- * @param data { object }
- * @param config { object }
- */
 export const translate = async (
   data: FilesTreeItem,
   config: config
 ): Promise<void> => {
-  // 扁平化数据 / flatten data for translate.
+  // flatten data for translate.
   const flattenData: IFlattenItem[] = [];
   flatten(data, flattenData, config);
 
-  // 扁平化后的数据调用翻译api翻译 / after flattening data call api to translation.
+  // after flattening data call api to translation.
   const translatedData: any = await transApi(flattenData);
 
-  // 数据全部翻译完成后，将数据整合至data中 / translated data merge origin data after translation finished.
+  // translated data merge origin data after translation finished.
   mergeTranslate(data, translatedData, config);
 
-  // 根据data生成翻译后的文件 / generate file by data.
+  // generate file by data.
   generateFile(data, config);
 
   console.log(chalk.white.bgGreen(" DONE ") + ` translation finished.`);

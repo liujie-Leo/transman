@@ -12,7 +12,6 @@ export interface config {
   customTranslation: any;
 }
 
-// 校验config
 const validateConfig = (config: config) => {
   if (!config.source) {
     console.log(
@@ -57,13 +56,11 @@ const validateConfig = (config: config) => {
     return false;
   }
 
-  // 初始化customTranslation
   config.customTranslation = config.customTranslation ?? {};
 
   return config;
 };
 
-// 从vite.config.js中获取配置 d
 const getConfigFromVite = async () => {
   const viteConfigPath = findup("vite.config.js") || "";
   if (viteConfigPath) {
@@ -91,15 +88,6 @@ const getConfigFromVite = async () => {
   return false;
 };
 
-/**
- * @function createTranslate
- * @description 翻译
- * @param config { object }
- * @param config.source { string }
- * @param config.outDir { string }
- * @param config.languageFrom { string }
- * @param config.languageTo { string }
- */
 const createTranslate = async () => {
   const config: config | boolean = await getConfigFromVite();
   if (config) {
